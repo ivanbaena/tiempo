@@ -1,4 +1,4 @@
-export const config = `const path = require('path');
+export const ssr = `const path = require('path');
 const webpackNodeExternals = require('webpack-node-externals');
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: 'bundle.js',
+    filename: 'ssr.js',
     path: path.resolve(__dirname, 'dist'),
   },
   target: 'node',

@@ -1,42 +1,43 @@
+#!/usr/bin/env node
 import fs from 'fs';
-import { config } from './public/webpack';
-import { npm } from './public/npm';
+import path from 'path';
+import { webpack, npm, react, apollo } from './public/';
 
-console.log('Tiempo');
+// initliaze dir options
+const base: string = path.resolve();
+const [, , ...args] = process.argv;
+const folderName: string = args[0];
 
-// Make dir
-const base = process.cwd();
-const folderName = 'root';
-
-console.log(base);
-// Create webpack config
-const webpack = config;
-try {
+const root = (path: string, folder: string) => {
   // Creates base project folder /tmp/apple, regardless of whether `/tmp` exist.
-  fs.mkdirSync(`${base}/${folderName}`, { recursive: true });
+  console.log(`Setup folder @ ${path}/${folder}`);
+  fs.mkdirSync(`${path}/${folder}`, { recursive: true });
+};
 
-  // Creates /tmp/apple/src.
-  fs.mkdirSync(`${base}/${folderName}/src/`, { recursive: true });
-  // Write src entry ts file
-  fs.writeFileSync(`${base}/${folderName}/src/index.ts`, 'src-index');
+const init = () => {
+  if (!folderName || folderName === '') {
+    console.log('Please specify a folder name');
+    return;
+  }
+  console.log('Base Path');
+  root(base, folderName);
+  // Write all webpack config files
+  console.log('Setting up webpack');
+  webpack(base, folderName);
+  // initialize npm & install modules
+  console.log('Installing npm modules may take a few mins');
+  npm(folderName);
 
-  // Creates /tmp/apple/src/client.
-  fs.mkdirSync(`${base}/${folderName}/src/client/`, { recursive: true });
-  // Write server ts file
-  fs.writeFileSync(`${base}/${folderName}/src/client/index.ts`, 'client-index');
+  // Creates react src /tmp/apple/src/client.
+  console.log('Setting up client');
+  react(base, folderName);
 
-  // Creates /tmp/apple/src/server.
-  fs.mkdirSync(`${base}/${folderName}/src/server/`, { recursive: true });
-  // Write server ts file
-  fs.writeFileSync(`${base}/${folderName}/src/server/index.ts`, 'server-index');
+  // Creates apollo src /tmp/apple/apollo/.
+  console.log('Setting up apollo server');
+  apollo(base, folderName);
 
-  // Write base webpack config file
-  fs.writeFileSync(`${base}/${folderName}/webpack.config.js`, webpack);
+  console.log('All set happy coding!');
+};
 
-  // Success
-} catch (err) {
-  console.error(err);
-}
-
-// initialize npm
-npm(folderName);
+// init cli
+init();
