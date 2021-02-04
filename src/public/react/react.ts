@@ -3,7 +3,8 @@ import { ssr, helpers } from './ssr';
 import { client, pages } from './client/';
 import { writeMultipleFiles } from '../../helper';
 
-export const react = (base: string, folderName: string) => {
+export const react = (base: string, folderName: string, cb: () => any) => {
+  console.log('Setting up client');
   // Creates /tmp/apple/src.
   fs.mkdirSync(`${base}/${folderName}/src/`, { recursive: true });
   // Write express ssr file
@@ -22,5 +23,5 @@ export const react = (base: string, folderName: string) => {
   // Creates /tmp/apple/src/client/pages.
   fs.mkdirSync(`${base}/${folderName}/src/client/pages`, { recursive: true });
   // Write pages base files
-  writeMultipleFiles(pages, base, `${folderName}/src/client/pages`);
+  writeMultipleFiles(pages, base, `${folderName}/src/client/pages`, cb);
 };

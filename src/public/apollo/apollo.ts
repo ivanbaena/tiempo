@@ -12,7 +12,8 @@ import { query } from './resolvers/query/files';
 import { index as modelIndex, user } from './models';
 import { index as dataIndex, User } from './data-source';
 
-export const apollo = (base: string, folderName: string) => {
+export const apollo = (base: string, folderName: string, cb: () => any) => {
+  console.log('Setting up apollo server');
   // Creates /tmp/apple/apollo.
   fs.mkdirSync(`${base}/${folderName}/apollo/`, { recursive: true });
   // Write express ssr file
@@ -89,4 +90,5 @@ export const apollo = (base: string, folderName: string) => {
   // Write express ssr file
   fs.writeFileSync(`${base}/${folderName}/apollo/models/index.ts`, modelIndex);
   fs.writeFileSync(`${base}/${folderName}/apollo/models/user.ts`, user);
+  cb();
 };

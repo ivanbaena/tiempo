@@ -11,7 +11,8 @@ const configs = {
   apollo: { data: apollo, extension: 'js' },
 };
 
-export const webpack = (base: string, folderName: string) => {
+export const webpack = (base: string, folderName: string, cb: () => any) => {
+  console.log('Setting up webpack');
   // Write base webpack config file
-  writeMultipleFiles(configs, base, folderName, true);
+  writeMultipleFiles(configs, base, folderName, cb, true);
 };

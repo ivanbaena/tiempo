@@ -7,12 +7,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts?$/,
+        test: /.ts?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
       {
-        test: /\.m?js/,
+        test: /.m?js/,
         resolve: {
           fullySpecified: false,
         },

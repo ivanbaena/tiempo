@@ -8,10 +8,11 @@ const base: string = path.resolve();
 const [, , ...args] = process.argv;
 const folderName: string = args[0];
 
-const root = (path: string, folder: string) => {
+const root = (path: string, folder: string, cb: any) => {
   // Creates base project folder /tmp/apple, regardless of whether `/tmp` exist.
   console.log(`Setup folder @ ${path}/${folder}`);
   fs.mkdirSync(`${path}/${folder}`, { recursive: true });
+  cb();
 };
 
 const init = () => {
@@ -19,24 +20,15 @@ const init = () => {
     console.log('Please specify a folder name');
     return;
   }
-  console.log('Base Path');
-  root(base, folderName);
-  // Write all webpack config files
-  console.log('Setting up webpack');
-  webpack(base, folderName);
-  // initialize npm & install modules
-  console.log('Installing npm modules may take a few mins');
-  npm(folderName);
-
-  // Creates react src /tmp/apple/src/client.
-  console.log('Setting up client');
-  react(base, folderName);
-
-  // Creates apollo src /tmp/apple/apollo/.
-  console.log('Setting up apollo server');
-  apollo(base, folderName);
-
-  console.log('All set happy coding!');
+  root(base, folderName, () =>
+    webpack(base, folderName, () =>
+      react(base, folderName, () =>
+        apollo(base, folderName, () =>
+          npm(folderName, () => console.log('All set happy coding!'))
+        )
+      )
+    )
+  );
 };
 
 // init cli
