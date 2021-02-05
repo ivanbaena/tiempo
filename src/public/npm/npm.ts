@@ -55,7 +55,7 @@ const updateScripts = (folderName: string, cb: () => any) => {
 };
 
 const lint = (folderName: string, cb: () => any) => {
-  exec(`npx prettier --write app/`, (error, stdout, stderr) => {
+  exec(`npx prettier --write ${folderName}/`, (error, stdout, stderr) => {
     cb();
     console.log(stderr);
     if (error !== null) {

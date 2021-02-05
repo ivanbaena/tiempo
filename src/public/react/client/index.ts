@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { Routes } from './Routes';
 
-// import './styles/index.css';
+import './styles/index.css';
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -44,4 +44,4 @@ ReactDOM.hydrate(
 );
 `;
 
-export * from './files';
+export * from "./files";

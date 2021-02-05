@@ -10,40 +10,31 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.(ts|tsx)?$/,
+        test: /\.(ts|tsx)?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
       },
       {
-        test: /.mjs$/,
+        test: /\.mjs$/,
         include: /node_modules/,
         type: 'javascript/auto',
       },
       {
-        test: /.js$/,
+        test: /\.js$/,
         enforce: 'pre',
         use: ['source-map-loader'],
       },
       {
-        test: /.module.css$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'typings-for-css-modules-loader',
-            options: {
-              modules: true,
-              namedExport: true,
-            },
-          },
-        ],
+        test: /\.module\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /.css$/i,
-        exclude: /.module.css$/i,
+        test: /\.css$/i,
+        exclude: /\.module\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
             loader: 'file-loader',

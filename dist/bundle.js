@@ -491,7 +491,7 @@
         Object.defineProperty(n, "__esModule", { value: !0 }),
           (n.dependencies = n.devDependencies = void 0),
           (n.devDependencies =
-            "npm i --save-dev webpack webpack-cli typescript ts-loader webpack-node-externals webpack-merge @types/react @types/react-dom @types/react-router-config @types/react-router-dom @types/express css-loader file-loader mini-css-extract-plugin npm-run-all rimraf style-loader @types/mongoose @types/passport @types/passport-local source-map-loader @types/express-session @types/bcryptjs typescript-plugin-css-modules"),
+            "npm i --save-dev webpack webpack-cli typescript ts-loader webpack-node-externals webpack-merge @types/react @types/react-dom @types/react-router-config @types/react-router-dom @types/express css-loader file-loader mini-css-extract-plugin @types/mini-css-extract-plugin npm-run-all rimraf style-loader @types/mongoose @types/passport @types/passport-local source-map-loader @types/express-session @types/bcryptjs typescript-plugin-css-modules"),
           (n.dependencies =
             "npm i react react-dom react-router-dom react-router-config express bcryptjs @apollo/client apollo-datasource-mongodb apollo-server-express express-session graphql mongoose passport passport-local session connect-mongo cross-fetch");
       },
@@ -515,13 +515,12 @@
             });
         };
         var l = function (e, n) {
-            s.exec("cd " + e + "; ls; " + i.devDependencies, function (
-              t,
-              r,
-              o
-            ) {
-              d(e, n), null !== t && console.log("exec error: " + t);
-            });
+            s.exec(
+              "cd " + e + "; ls; " + i.devDependencies,
+              function (t, r, o) {
+                d(e, n), null !== t && console.log("exec error: " + t);
+              }
+            );
           },
           d = function (e, n) {
             s.exec("cd " + e + "; ls; " + i.dependencies, function (t, r, o) {
@@ -550,7 +549,7 @@
               p(e, n);
           },
           p = function (e, n) {
-            s.exec("npx prettier --write app/", function (e, t, r) {
+            s.exec("npx prettier --write " + e + "/", function (e, t, r) {
               n(),
                 console.log(r),
                 null !== e && console.log("exec error: " + e);
@@ -610,7 +609,7 @@
         Object.defineProperty(n, "__esModule", { value: !0 }),
           (n.App = void 0),
           (n.App =
-            "\nimport React from 'react';\nimport { renderRoutes } from 'react-router-config';\n\nconst App = ({ route }: any) => {\n  return <div>{renderRoutes(route.routes)}</div>;\n};\n\nexport default {\n  component: App,\n};\n");
+            "\nimport React from 'react';\nimport { renderRoutes } from 'react-router-config';\n\nimport styles from './App.module.css';\n\nconst App = ({ route }: any) => {\n  return <div>{renderRoutes(route.routes)}</div>;\n};\n\nexport default {\n  component: App,\n};\n");
       },
       9224: (e, n) => {
         Object.defineProperty(n, "__esModule", { value: !0 }),
@@ -662,7 +661,7 @@
         Object.defineProperty(n, "__esModule", { value: !0 }),
           (n.index = void 0),
           (n.index =
-            "\nimport React from 'react';\nimport ReactDOM from 'react-dom';\nimport { renderRoutes } from 'react-router-config';\nimport { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';\nimport { BrowserRouter as Router } from 'react-router-dom';\n\nimport { Routes } from './Routes';\n\n// import './styles/index.css';\n\nconst cache = new InMemoryCache({\n  typePolicies: {\n    Query: {\n      fields: {\n        userPosts: {\n          merge(existing, incoming) {\n            return incoming;\n          },\n        },\n      },\n    },\n  },\n});\n\nconst client = new ApolloClient({\n  cache,\n  connectToDevTools: true,\n  uri: 'http://localhost:4000/graphql',\n  credentials: 'include',\n  queryDeduplication: false,\n  defaultOptions: {\n    watchQuery: {\n      fetchPolicy: 'cache-and-network',\n    },\n  },\n});\n\nReactDOM.hydrate(\n  <ApolloProvider client={client}>\n    <Router>{renderRoutes(Routes)}</Router>\n  </ApolloProvider>,\n  document.getElementById('root')\n);\n"),
+            "\nimport React from 'react';\nimport ReactDOM from 'react-dom';\nimport { renderRoutes } from 'react-router-config';\nimport { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';\nimport { BrowserRouter as Router } from 'react-router-dom';\n\nimport { Routes } from './Routes';\n\nimport './styles/index.css';\n\nconst cache = new InMemoryCache({\n  typePolicies: {\n    Query: {\n      fields: {\n        userPosts: {\n          merge(existing, incoming) {\n            return incoming;\n          },\n        },\n      },\n    },\n  },\n});\n\nconst client = new ApolloClient({\n  cache,\n  connectToDevTools: true,\n  uri: 'http://localhost:4000/graphql',\n  credentials: 'include',\n  queryDeduplication: false,\n  defaultOptions: {\n    watchQuery: {\n      fetchPolicy: 'cache-and-network',\n    },\n  },\n});\n\nReactDOM.hydrate(\n  <ApolloProvider client={client}>\n    <Router>{renderRoutes(Routes)}</Router>\n  </ApolloProvider>,\n  document.getElementById('root')\n);\n"),
           o(t(902), n);
       },
       2253: (e, n) => {
@@ -705,6 +704,13 @@
           o(t(3325), n),
           o(t(2253), n);
       },
+      9690: (e, n) => {
+        Object.defineProperty(n, "__esModule", { value: !0 }),
+          (n.appCss = n.indexCss = n.custom = void 0),
+          (n.custom = "\ndeclare module '*.module.css';\n"),
+          (n.indexCss = "\nbody {\n  background: lightblue;\n}\n"),
+          (n.appCss = "\n.app {\n  width: 100%;\n}\n");
+      },
       1888: function (e, n, t) {
         var r =
             (this && this.__createBinding) ||
@@ -731,7 +737,8 @@
             };
         Object.defineProperty(n, "__esModule", { value: !0 }),
           o(t(4132), n),
-          o(t(851), n);
+          o(t(851), n),
+          o(t(9690), n);
       },
       4132: function (e, n, t) {
         var r =
@@ -744,23 +751,36 @@
         var o = r(t(5747)),
           s = t(851),
           i = t(8486),
-          a = t(8373);
+          a = t(9690),
+          l = t(8373);
         n.react = function (e, n, t) {
           console.log("Setting up client"),
             o.default.mkdirSync(e + "/" + n + "/src/", { recursive: !0 }),
             o.default.writeFileSync(e + "/" + n + "/src/index.ts", s.ssr),
+            o.default.writeFileSync(e + "/" + n + "/src/custom.d.ts", a.custom),
             o.default.mkdirSync(e + "/" + n + "/src/helpers/", {
               recursive: !0,
             }),
-            a.writeMultipleFiles(s.helpers, e, n + "/src/helpers"),
+            l.writeMultipleFiles(s.helpers, e, n + "/src/helpers"),
             o.default.mkdirSync(e + "/" + n + "/src/client/", {
               recursive: !0,
             }),
-            a.writeMultipleFiles(i.client, e, n + "/src/client"),
+            l.writeMultipleFiles(i.client, e, n + "/src/client"),
+            o.default.writeFileSync(
+              e + "/" + n + "/src/client/App.module.css",
+              a.appCss
+            ),
             o.default.mkdirSync(e + "/" + n + "/src/client/pages", {
               recursive: !0,
             }),
-            a.writeMultipleFiles(i.pages, e, n + "/src/client/pages", t);
+            l.writeMultipleFiles(i.pages, e, n + "/src/client/pages", t),
+            o.default.mkdirSync(e + "/" + n + "/src/client/styles", {
+              recursive: !0,
+            }),
+            o.default.writeFileSync(
+              e + "/" + n + "/src/client/styles/index.css",
+              a.indexCss
+            );
         };
       },
       4840: (e, n) => {
@@ -841,7 +861,7 @@
         Object.defineProperty(n, "__esModule", { value: !0 }),
           (n.base = void 0),
           (n.base =
-            "\nconst MiniCssExtractPlugin = require('mini-css-extract-plugin');\n\nmodule.exports = {\n  mode: 'development',\n  watchOptions: {\n    aggregateTimeout: 300,\n    ignored: /node_modules/,\n  },\n  module: {\n    rules: [\n      {\n        test: /.(ts|tsx)?$/,\n        use: 'ts-loader',\n        exclude: /node_modules/,\n      },\n      {\n        test: /.mjs$/,\n        include: /node_modules/,\n        type: 'javascript/auto',\n      },\n      {\n        test: /.js$/,\n        enforce: 'pre',\n        use: ['source-map-loader'],\n      },\n      {\n        test: /.module.css$/i,\n        use: [\n          MiniCssExtractPlugin.loader,\n          {\n            loader: 'typings-for-css-modules-loader',\n            options: {\n              modules: true,\n              namedExport: true,\n            },\n          },\n        ],\n      },\n      {\n        test: /.css$/i,\n        exclude: /.module.css$/i,\n        use: ['style-loader', 'css-loader'],\n      },\n      {\n        test: /.(png|jpe?g|gif)$/i,\n        use: [\n          {\n            loader: 'file-loader',\n            options: {\n              name: '[name].[contenthash].[ext]',\n              outputPath: 'static/assets/',\n              publicPath: 'static/assets/',\n            },\n          },\n        ],\n      },\n    ],\n  },\n  plugins: [\n    new MiniCssExtractPlugin({\n      filename: '[name].css',\n      chunkFilename: '[id].css',\n    }),\n  ],\n};\n");
+            "\nconst MiniCssExtractPlugin = require('mini-css-extract-plugin');\n\nmodule.exports = {\n  mode: 'development',\n  watchOptions: {\n    aggregateTimeout: 300,\n    ignored: /node_modules/,\n  },\n  module: {\n    rules: [\n      {\n        test: /.(ts|tsx)?$/,\n        use: 'ts-loader',\n        exclude: /node_modules/,\n      },\n      {\n        test: /.mjs$/,\n        include: /node_modules/,\n        type: 'javascript/auto',\n      },\n      {\n        test: /.js$/,\n        enforce: 'pre',\n        use: ['source-map-loader'],\n      },\n      {\n        test: /.module.css$/i,\n        use: [MiniCssExtractPlugin.loader, 'css-loader'],\n      },\n      {\n        test: /.css$/i,\n        exclude: /.module.css$/i,\n        use: ['style-loader', 'css-loader'],\n      },\n      {\n        test: /.(png|jpe?g|gif)$/i,\n        use: [\n          {\n            loader: 'file-loader',\n            options: {\n              name: '[name].[contenthash].[ext]',\n              outputPath: 'static/assets/',\n              publicPath: 'static/assets/',\n            },\n          },\n        ],\n      },\n    ],\n  },\n  plugins: [\n    new MiniCssExtractPlugin({\n      filename: '[name].css',\n      chunkFilename: '[id].css',\n    }),\n  ],\n};\n");
       },
       4159: (e, n) => {
         Object.defineProperty(n, "__esModule", { value: !0 }),
